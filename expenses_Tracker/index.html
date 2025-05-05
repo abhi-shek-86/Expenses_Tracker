@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <!-- Landing Page Section -->
+  <div class="container" id="landing-section">
+    <h1>Welcome to Expense Tracker</h1>
+    <p>Track your expenses, manage your budget, and stay on top of your finances with ease.</p>
+    <button id="get-started-btn"><i class="fas fa-arrow-right"></i> Get Started</button>
+  </div>
+
+  <!-- Auth Section -->
+  <div class="container" id="auth-section" style="display: none;">
+    <h2 id="auth-title">Login</h2>
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <input type="number" id="monthly-income" placeholder="Monthly Income" style="display: none;" />
+    <button id="auth-btn"><i class="fas fa-sign-in-alt"></i> Login</button>
+    <p id="toggle-auth">Don't have an account? <span id="switch-mode">Sign up</span></p>
+  </div>
+
+  <!-- Dashboard Section -->
+  <div class="container" id="dashboard" style="display: none;">
+    <div class="logout-container">
+      <h2>APRIL 2023</h2>
+      <button onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+
+    <!-- Summary Section -->
+    <div class="dashboard-summary">
+      <div class="summary-card income">
+        <h4>Income</h4>
+        <div class="amount" id="total-income">₹0</div>
+      </div>
+      <div class="summary-card expense">
+        <h4>Expense</h4>
+        <div class="amount" id="total-expense">₹0</div>
+      </div>
+    </div>
+
+    <!-- Circular Progress Chart -->
+    <div class="chart-container">
+      <svg viewBox="0 0 36 36" class="circular-chart">
+        <path class="circle-bg"
+          d="M18 2.0845
+            a 15.9155 15.9155 0 0 1 0 31.831
+            a 15.9155 15.9155 0 0 1 0 -31.831"
+        />
+        <path class="circle safe-circle"
+          stroke-dasharray="75, 100"
+          d="M18 2.0845
+            a 15.9155 15.9155 0 0 1 0 31.831
+            a 15.9155 15.9155 0 0 1 0 -31.831"
+        />
+        <text x="18" y="17.5" class="percentage">
+          <tspan class="amount" id="safe-amount">₹0</tspan>
+          <tspan x="18" y="22" class="label">Safe to Spend</tspan>
+        </text>
+      </svg>
+    </div>
+
+    <!-- Add Expense Form -->
+    <div class="add-expense-form">
+      <h3><i class="fas fa-plus-circle"></i> Add Expense</h3>
+      <input type="text" id="desc" placeholder="Description" />
+      <input type="number" id="amount" placeholder="Amount" />
+      <select id="category">
+        <option value="Food">Food & Beverages</option>
+        <option value="Travel">Transport</option>
+        <option value="Health">Health</option>
+        <option value="Shopping">Shopping</option>
+        <option value="Bills">Bills & Utilities</option>
+        <option value="Entertainment">Entertainment</option>
+        <option value="Other">Other</option>
+      </select>
+      <button onclick="addExpense()"><i class="fas fa-plus"></i> Add Expense</button>
+    </div>
+
+    <!-- Filter and Expense List -->
+    <div class="filter-container">
+      <h3>Recent Transactions</h3>
+      <input type="month" id="monthPicker" onchange="filterByMonth()" />
+    </div>
+    
+    <ul id="expense-list">
+      <!-- Expense items will be added here by JavaScript -->
+    </ul>
+    
+    <h3 id="total-amount">Total: ₹0</h3>
+  </div>
+
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
