@@ -80,7 +80,11 @@ authBtn.addEventListener('click', async () => {
 
 // Logout Function
 window.logout = function() {
-  signOut(auth);
+  signOut(auth).then(() => {
+    console.log("User logged out successfully");
+  }).catch((error) => {
+    console.error("Error logging out:", error);
+  });
 };
 
 // Handle Auth State Changes
@@ -107,9 +111,9 @@ onAuthStateChanged(auth, async (user) => {
     updateSummaryData(); // Update the summary cards and chart
   } else {
     // User is not logged in
-    landingSection.style.display = 'none'; // Hide landing page
-    authSection.style.display = 'block'; // Show login/signup section
-    dashboard.style.display = 'none'; // Hide dashboard
+    landingSection.style.display = 'block'; // Show the landing page
+    authSection.style.display = 'none';    // Hide the login page
+    dashboard.style.display = 'none';     // Hide the dashboard
   }
 });
 
@@ -390,6 +394,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Handle "Get Started" button click
 document.getElementById('get-started-btn').addEventListener('click', () => {
+  // Hide the landing page
   document.getElementById('landing-section').style.display = 'none';
+  // Show the login page
+  document.getElementById('auth-section').style.display = 'block';
+});
+
+document.getElementById('get-started-btn').addEventListener('click', () => {
+  // Hide the landing page
+  document.getElementById('landing-section').style.display = 'none';
+  // Show the login page
   document.getElementById('auth-section').style.display = 'block';
 });
