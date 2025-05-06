@@ -25,23 +25,38 @@ import {
 const authSection = document.getElementById('auth-section');
 const dashboard = document.getElementById('dashboard');
 const authBtn = document.getElementById('auth-btn');
-const switchMode = document.getElementById('switch-mode');
 const authTitle = document.getElementById('auth-title');
 const toggleAuth = document.getElementById('toggle-auth');
 
 let isLogin = true;
 
 // Toggle between login and signup
-switchMode.addEventListener('click', () => {
-  isLogin = !isLogin;
-  authTitle.textContent = isLogin ? 'Login' : 'Sign Up';
-  authBtn.innerHTML = isLogin 
-    ? '<i class="fas fa-sign-in-alt"></i> Login'
-    : '<i class="fas fa-user-plus"></i> Sign Up';
+function attachSwitchModeListener() {
+  const switchMode = document.getElementById('switch-mode');
+  switchMode.addEventListener('click', () => {
+    isLogin = !isLogin;
 
-  // Show or hide the monthly income field based on the mode
-  document.getElementById('monthly-income').style.display = isLogin ? 'none' : 'block';
-});
+    // Update the title and button text
+    authTitle.textContent = isLogin ? 'Login' : 'Sign Up';
+    authBtn.innerHTML = isLogin 
+      ? '<i class="fas fa-sign-in-alt"></i> Login'
+      : '<i class="fas fa-user-plus"></i> Sign Up';
+
+    // Update the toggle text
+    toggleAuth.innerHTML = isLogin 
+      ? "Don't have an account? <span id='switch-mode'>Sign up</span>"
+      : "Already have an account? <span id='switch-mode'>Login</span>";
+
+    // Show or hide the monthly income field based on the mode
+    document.getElementById('monthly-income').style.display = isLogin ? 'none' : 'block';
+
+    // Reattach the event listener for the dynamically updated switchMode button
+    attachSwitchModeListener();
+  });
+}
+
+// Attach the initial event listener
+attachSwitchModeListener();
 
 // Authentication
 authBtn.addEventListener('click', async () => {
